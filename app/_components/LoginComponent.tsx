@@ -27,7 +27,7 @@ export default function LoginComponent() {
         />
 
         <button
-          className="mt-5 text-white bg-cyan-500 min-w-60 h-10 rounded text-xl "
+          className="mt-5 disabled:cursor-not-allowed disabled:bg-cyan-700 disabled:text-gray-200 text-white bg-cyan-500 hover:bg-cyan-600 hover:cursor-pointer min-w-60 h-10 rounded text-xl "
           type="submit"
         >
           Login
