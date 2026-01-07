@@ -9,11 +9,6 @@ import AddNewItems from "./_components/AddNewItems";
 
 export default function Home() {
 
-  const [itemName, setItemName] = useState<string>("");
-  const [imgUrl, setImgUrl] = useState<string>("");
-  const [price, setPrice] = useState<number>(NaN);
-  const [desc, setDesc] = useState<string>("");
-
   const [isDashboard, setIsDashboard] = useState<boolean>(true);
 
   return (
