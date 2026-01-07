@@ -19,8 +19,38 @@ export default function AddNewItemsForm(
   const router = useRouter();
 
   const handleSubmit = async(e:FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
-    console.log(item);
+    
+    if (item.name === "" || item.imgUrl === "" || isNaN(item.price) || item.desc === "") {
+      alert("Fill all Fields.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (item.price < 0) {
+      alert("Price should be greater than zero.");
+      setIsLoading(false);
+      return;
+    }
+
+    const res = await fetch(`api/addNewItem`, {
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      credentials: "include",
+      body: JSON.stringify(item)
+    });
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      alert(data.msg);
+      setIsLoading(false);
+      return;
+    }
+
+    alert("Success");
+    router.push("/");
     setIsLoading(false);
   }
 

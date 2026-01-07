@@ -8,7 +8,7 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = (await getCookies("token"))?.value;
+  const token = (await getCookies("token"));
   
   if(pathname !== '/restaurant') {
     if(!token) {

@@ -14,7 +14,7 @@ export default function Home() {
   const [price, setPrice] = useState<number>(NaN);
   const [desc, setDesc] = useState<string>("");
 
-  const [isDashboard, setIsDashboard] = useState<boolean>(false);
+  const [isDashboard, setIsDashboard] = useState<boolean>(true);
 
   return (
     <>
