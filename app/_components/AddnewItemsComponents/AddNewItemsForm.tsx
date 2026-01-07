@@ -20,6 +20,8 @@ export default function AddNewItemsForm(
 
   const handleSubmit = async(e:FormEvent) => {
     setIsLoading(true);
+    console.log(item);
+    setIsLoading(false);
   }
 
   return (
