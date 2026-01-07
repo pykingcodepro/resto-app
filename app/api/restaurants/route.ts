@@ -3,6 +3,7 @@ import { Restaurant } from "@/app/db/models";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { setCookies } from "@/libs/setCookies";
+import bcrypt from "bcrypt";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -23,7 +24,6 @@ export const POST = async (req: NextRequest) => {
     await connectDB();
 
     const { name, email, password, city, address, contact } = await req.json();
-    const newRestData = { name, email, password, city, address, contact };
 
     const rest = await Restaurant.findOne({ email: email });
     if (rest) {
@@ -33,14 +33,25 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newRestData = {
+      name: name,
+      email: email,
+      password: hashedPassword,
+      city: city,
+      address: address,
+      contact: contact
+    };
+    // console.log(newRestData);
     const newRest = await Restaurant.create(newRestData);
 
     const token = jwt.sign(newRestData, JWT_SECRET);
-    await setCookies('token', token);
+    await setCookies("token", token);
     console.log(token);
 
     return NextResponse.json({ msg: "OK" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ msg: "Internal Server Error" }, { status: 500 });
+    console.log(error)
+    return NextResponse.json({ msg: "Internal Server Error", error: error }, { status: 500 });
   }
 };

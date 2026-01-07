@@ -28,8 +28,16 @@ export default function SignUpComponent() {
     setIsLoading(true);
     setMsg("");
 
-    if (restaurantName === "" || email === "" || password === "" || confirmPassword === "" || city === "" || address === "" || isNaN(contact)) {
-      setMsg("Fill all the fields.");
+    if (
+      restaurantName === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === "" ||
+      city === "" ||
+      address === "" ||
+      isNaN(contact)
+    ) {
+      alert("Fill all the fields.");
       setIsLoading(false);
       return;
     }
@@ -55,7 +63,7 @@ export default function SignUpComponent() {
       setMsg(data.msg);
       return;
     }
-    router.push('/');
+    router.push("/");
     setIsLoading(false);
   };
 

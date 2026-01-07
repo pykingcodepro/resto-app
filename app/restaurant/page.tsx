@@ -10,7 +10,7 @@ export default function page() {
   const [login, setLogin] = useState<boolean>(true);
   return (
     <>
-      <RestaurantHeader />
+      <RestaurantHeader isLogin />
       {login ? <LoginComponent /> : <SignUpComponent />}
       <br />
       <span className="mb-20 text-center inline-block w-screen">

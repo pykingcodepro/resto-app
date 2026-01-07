@@ -1,7 +1,9 @@
 import Link from "next/link";
 import React from "react";
 
-export default function RestaurantHeader() {
+export default function RestaurantHeader(
+  { isLogin } : { isLogin: boolean }
+) {
   return (
     <div className="flex justify-between mb-5">
       <div className="logo">
@@ -16,12 +18,15 @@ export default function RestaurantHeader() {
         <li>
           <Link href="/">Home</Link>
         </li>
-        <li>
-          <Link href="/">Login/SignUp</Link>
-        </li>
-        <li>
-          <Link href="/">Profile</Link>
-        </li>
+        {
+          isLogin 
+          ? <li>
+              <Link href="/">Login/SignUp</Link>
+            </li>
+          : <li>
+              <Link href="/">Profile</Link>
+            </li>
+        }
       </ul>
     </div>
   );
