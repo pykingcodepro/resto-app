@@ -15,6 +15,7 @@ export default function AddNewItemsForm(
 ) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [msg, setMsg] = useState<string>("");
 
   const router = useRouter();
 
@@ -23,13 +24,13 @@ export default function AddNewItemsForm(
     setIsLoading(true);
     
     if (item.name === "" || item.imgUrl === "" || isNaN(item.price) || item.desc === "") {
-      alert("Fill all Fields.");
+      setMsg("Fill all Fields.");
       setIsLoading(false);
       return;
     }
 
     if (item.price < 0) {
-      alert("Price should be greater than zero.");
+      setMsg("Price should be greater than zero.");
       setIsLoading(false);
       return;
     }
@@ -44,12 +45,12 @@ export default function AddNewItemsForm(
     const data = await res.json();
 
     if(!res.ok) {
-      alert(data.msg);
+      setMsg(data.msg);
       setIsLoading(false);
       return;
     }
 
-    alert("Success");
+    setMsg("");
     router.push("/");
     setIsLoading(false);
   }
@@ -114,6 +115,7 @@ export default function AddNewItemsForm(
             Back
           </button>
         </div>
+        <span className="mt-5 text-red-600">{msg}</span>
 
       </form>
     </>
