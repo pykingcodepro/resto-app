@@ -51,7 +51,7 @@ export default function AddNewItemsForm(
     }
 
     setMsg("");
-    router.push("/");
+    setIsDashboard(true);
     setIsLoading(false);
   }
 
