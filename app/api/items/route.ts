@@ -8,6 +8,27 @@ import { NextRequest, NextResponse } from "next/server";
 
 const JWT_SECRET =  new TextEncoder().encode(process.env.JWT_SECRET);
 
+export const GET = async(req: NextRequest) => {
+
+  try {
+    
+    await connectDB();
+    const token = await getCookies("token");
+    if(!token)
+      return NextResponse.json({ msg: "Authorization failed" }, { status: 401 });
+    const restId = (await jwtVerify(token, JWT_SECRET)).payload._id;
+
+    const items = await Item.find({ restId: restId });
+
+    return NextResponse.json({ data: items }, { status: 200 });
+
+
+  } catch (error) {
+    return NextResponse.json({ msg: "Internal Server Error" }, { status: 500 });
+  }
+
+}
+
 export const POST = async(req: NextRequest) => {
   try {
     
