@@ -35,7 +35,7 @@ export default function AddNewItemsForm(
       return;
     }
 
-    const res = await fetch(`api/addNewItem`, {
+    const res = await fetch(`api/items/`, {
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       credentials: "include",
