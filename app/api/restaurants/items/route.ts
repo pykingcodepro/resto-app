@@ -50,3 +50,19 @@ export const POST = async(req: NextRequest) => {
     return NextResponse.json({ msg: "internal Server Error", err: error }, { status: 500 });
   }
 }
+
+export const PUT = async(req:NextRequest) => {
+  try {
+    
+    await connectDB();
+    const editItem = await req.json();
+
+    await Item.findByIdAndUpdate(editItem._id, editItem);
+
+    return NextResponse.json({ data: editItem }, { status: 200 });
+
+
+  } catch (error) {
+    return NextResponse.json({ msg: "internal Server Error", err: error }, { status: 500 });
+  }
+}
