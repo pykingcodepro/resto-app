@@ -5,7 +5,13 @@ import Card from './Card';
 import { Item } from '@/typeDefinitions/Item';
 
 export default function Dashboard(
-  { setIsDashboard } : { setIsDashboard: Dispatch<SetStateAction<boolean>> }
+  { 
+    setIsDashboard,
+    setEditItem
+  } : { 
+    setIsDashboard: Dispatch<SetStateAction<boolean>>,
+    setEditItem: (val: Item|null) => void
+  }
 ) {
 
   const [items, setItems] = useState<Item[]>([]);
@@ -19,6 +25,7 @@ export default function Dashboard(
     .then(data => {
       setItems(data.data.map((item: Item) => {
         return {
+          _id: item._id,
           name: item.name,
           imgUrl: item.imgUrl,
           price: item.price,
@@ -34,7 +41,7 @@ export default function Dashboard(
       <h1 className='text-3xl font-semibold'>Dashboard</h1>
       <div className='grid grid-cols-3 gap-20 my-10'>
         {items.map((item:Item, key) => {
-          return <Card key={key} item={item} />
+          return <Card key={key} item={item} setIsDashboard={setIsDashboard} setEditItem={setEditItem} />
         })}
       </div>
       <button

@@ -7,17 +7,16 @@ import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 
 export default function AddNewItemsForm(
-  { item, setItem, setIsDashboard } : {
+  { item, setItem, setIsDashboard, isEdit } : {
     item: Item,
     setItem: (val: Item) => void,
-    setIsDashboard: (val: boolean) => void
+    setIsDashboard: (val: boolean) => void,
+    isEdit: boolean
   }
 ) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [msg, setMsg] = useState<string>("");
-
-  const router = useRouter();
 
   const handleSubmit = async(e:FormEvent) => {
     e.preventDefault();
@@ -53,6 +52,41 @@ export default function AddNewItemsForm(
     setMsg("");
     setIsDashboard(true);
     setIsLoading(false);
+  }
+
+  const handleEdit = async(e:FormEvent) => {
+    e.preventDefault();
+
+    if (item.name === "" || item.imgUrl === "" || isNaN(item.price) || item.desc === "") {
+      setMsg("Fill all Fields.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (item.price < 0) {
+      setMsg("Price should be greater than zero.");
+      setIsLoading(false);
+      return;
+    }
+
+    const res = await fetch('/api/restaurants/items/', {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(item)
+    });
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      setMsg(data.msg);
+      setIsLoading(false);
+      return;
+    }
+
+    setMsg("");
+    setIsDashboard(true);
+    setIsLoading(false);
+
   }
 
   return (
@@ -98,13 +132,26 @@ export default function AddNewItemsForm(
         ></textarea>
 
         <div className="w-70 flex justify-between">
-          <input
-            className="mt-5 w-30 disabled:cursor-not-allowed disabled:bg-red-700 disabled:text-gray-200 text-white bg-red-500 hover:bg-red-600 hover:cursor-pointer h-10 rounded text-xl "
-            type="submit"
-            value="Add"
-            disabled={isLoading}
-            onClick={handleSubmit}
-          />
+          {
+            !isEdit
+            ? (
+              <input
+                className="mt-5 w-30 disabled:cursor-not-allowed disabled:bg-red-700 disabled:text-gray-200 text-white bg-red-500 hover:bg-red-600 hover:cursor-pointer h-10 rounded text-xl "
+                type="submit"
+                value="Add"
+                disabled={isLoading}
+                onClick={handleSubmit}
+              />
+            ) : (
+              <input
+                className="mt-5 w-30 disabled:cursor-not-allowed disabled:bg-yellow-500 disabled:text-gray-200 bg-yellow-300 hover:bg-yellow-400 hover:cursor-pointer h-10 rounded text-xl "
+                type="submit"
+                value="Edit"
+                disabled={isLoading}
+                onClick={handleEdit}
+              />
+            )
+          }
           <button
             className="mt-5 w-30 disabled:cursor-not-allowed disabled:bg-cyan-700 disabled:text-gray-200 text-white bg-cyan-500 hover:bg-cyan-600 hover:cursor-pointer h-10 rounded text-xl flex justify-center items-center"
             onClick={e => {
