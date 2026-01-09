@@ -51,7 +51,7 @@ export default function SignUpComponent() {
       contact: contact,
     };
 
-    const res = await fetch("api/restaurants/", {
+    const res = await fetch("/api/restaurants/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newRest),
@@ -63,7 +63,7 @@ export default function SignUpComponent() {
       setMsg(data.msg);
       return;
     }
-    router.push("/");
+    router.push("/restaurant");
     setIsLoading(false);
   };
 

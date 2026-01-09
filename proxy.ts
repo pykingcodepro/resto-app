@@ -10,24 +10,24 @@ export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const token = (await getCookies("token"));
   
-  if(pathname !== '/restaurant') {
+  if(pathname !== '/restaurant/auth') {
     if(!token) {
-      return NextResponse.redirect(new URL('/restaurant', req.url));
+      return NextResponse.redirect(new URL('/restaurant/auth', req.url));
     }
     try {
       await jwtVerify(token, JWT_SECRET)
       return NextResponse.next();
     } catch (error) {
       await deleteCookies("token");
-      return NextResponse.redirect(new URL('/restaurant', req.url));
+      return NextResponse.redirect(new URL('/restaurant/auth', req.url));
     }
   }
 
-  if(pathname === '/restaurant') {
+  if(pathname === '/restaurant/auth') {
     if(token) {
       try {
         await jwtVerify(token, JWT_SECRET);
-        return NextResponse.redirect(new URL('/', req.url));
+        return NextResponse.redirect(new URL('/restaurant', req.url));
       } catch (error) {
         await deleteCookies("token");
         return NextResponse.next();
@@ -38,5 +38,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/restaurant']
+  matcher: ['/restaurant', '/restaurant/auth']
 };
