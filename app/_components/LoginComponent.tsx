@@ -28,7 +28,7 @@ export default function LoginComponent() {
       setIsLoading(false)
     }
 
-    const res = await fetch('api/login/', {
+    const res = await fetch('/api/restaurants/login/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, password: password })
@@ -42,7 +42,7 @@ export default function LoginComponent() {
       return;
     }
     
-    router.push("/");
+    router.push("/restaurant");
     setIsLoading(false);
     setMsg("");
 

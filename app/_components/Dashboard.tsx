@@ -11,7 +11,7 @@ export default function Dashboard(
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    fetch('api/items', {
+    fetch('/api/restaurants/items', {
       method: 'GET',
       credentials: 'include'
     })

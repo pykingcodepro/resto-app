@@ -1,32 +1,25 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
-import LoginComponent from "../_components/LoginComponent";
-import SignUpComponent from "../_components/SignUpComponent";
+import { useState } from "react";
+import AddNewItems from "../_components/AddNewItems";
+import Dashboard from "../_components/Dashboard";
 import RestaurantHeader from "../_components/RestaurantHeader";
-import RestaurantFooter from "../_components/RestaurantFooter";
 
-export default function page() {
-  const [login, setLogin] = useState<boolean>(true);
+
+export default function Home() {
+
+  const [isDashboard, setIsDashboard] = useState<boolean>(true);
+
   return (
     <>
-      <RestaurantHeader isLogin />
-      {login ? <LoginComponent /> : <SignUpComponent />}
-      <br />
-      <span className="mb-20 text-center inline-block w-screen">
-        {" "}
-        {login ? "Don't have an account?" : "Already have an account?"}
-        <button
-          className="cursor-pointer ml-4"
-          onClick={(e: FormEvent) => {
-            e.preventDefault();
-            setLogin(!login);
-          }}
-        >
-          {login ? "Sign up" : "Login"}
-        </button>
-      </span>
-      <RestaurantFooter />
+      <RestaurantHeader isLogin={false} />
+      {
+        isDashboard
+        ? <Dashboard setIsDashboard={setIsDashboard} />
+        : (
+          <AddNewItems setIsDashboard={setIsDashboard} />
+        )
+      }
     </>
   );
 }
