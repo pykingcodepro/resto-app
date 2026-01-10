@@ -1,14 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import AddNewItems from "../_components/AddNewItems";
-import Dashboard from "../_components/Dashboard";
+import { Item } from "@/typeDefinitions/Item";
 import { useState } from "react";
 import AddNewItems from "../_components/AddNewItems";
 import Dashboard from "../_components/Dashboard";
 import RestaurantHeader from "../_components/RestaurantHeader";
-import { Item } from "@/typeDefinitions/Item";
-
 
 export default function Home() {
 

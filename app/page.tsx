@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <>
-      <h1>User Dashboard.</h1>
+      <h1>Welcome Page</h1>
     </>
   );
 }
