@@ -4,32 +4,12 @@ import { FormEvent } from "react";
 export default function Card({
   item,
   setIsDashboard,
-  setEditItem,
-  removeItem
+  setEditItem
 }: {
   item: Item;
   setIsDashboard: (val: boolean) => void;
-  setEditItem: (item: Item | null) => void;
-  removeItem: (item: Item) => void;
+  setEditItem: (item: Item|null) => void
 }) {
-  const handleDelete = async(e: FormEvent) => {
-    e.preventDefault();
-
-    const res = await fetch('/api/restaurants/items', {
-      method: 'DELETE',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ itemId: item._id })
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.msg);
-      return;
-    }
-    removeItem(item);
-
-  };
 
   return (
     <div className="card flex flex-col justify-between rounded-xl shadow-lg w-70 pb-5 hover:scale-[1.05] hover:bg-gray- duration-300 transition-all">
@@ -64,10 +44,7 @@ export default function Card({
         >
           Edit
         </button>
-        <button
-          className="bg-red-500 w-20 py-1 rounded text-white cursor-pointer hover:bg-red-400"
-          onClick={handleDelete}
-        >
+        <button className="bg-red-500 w-20 py-1 rounded text-white cursor-pointer hover:bg-red-400">
           Delete
         </button>
       </div>
