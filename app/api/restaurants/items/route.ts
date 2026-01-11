@@ -66,3 +66,22 @@ export const PUT = async(req:NextRequest) => {
     return NextResponse.json({ msg: "internal Server Error", err: error }, { status: 500 });
   }
 }
+
+export const DELETE = async(req:NextRequest) => {
+  
+  try {
+    
+    await connectDB();
+    const { itemId } = await req.json();
+
+    console.log(itemId);
+
+    await Item.findByIdAndDelete(itemId);
+
+    return NextResponse.json({ msg: "OK" }, { status: 200 });
+
+  } catch (error) {
+    return NextResponse.json({ msg: "internal Server Error", err: error }, { status: 500 });
+  }
+
+}
