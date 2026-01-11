@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 export default function Home() {
@@ -10,3 +11,15 @@ export default function Home() {
     </>
   );
 }
+=======
+"use client";
+
+export default function Home() {
+
+  return (
+    <>
+      <h1>Welcome Page</h1>
+    </>
+  );
+}
+>>>>>>> ad15515 (first commit)
